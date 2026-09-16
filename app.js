@@ -1,5 +1,6 @@
 (function () {
   const STORAGE_KEY = "anre-quiz-progress-v1";
+  const EXAM_SIZE = 25;
   const app = document.getElementById("app");
   const allQuestions = (window.QUIZ_DATA && window.QUIZ_DATA.questions) || [];
   const playable = allQuestions.filter((q) => q.complete);
@@ -12,7 +13,7 @@
     selected: null,
     locked: false,
     answers: {},
-    examSize: 30,
+    examSize: EXAM_SIZE,
     timerSec: 0,
     timerId: null,
     useTimer: false,
@@ -210,17 +211,7 @@
         </article>
         <article class="card">
           <h2>Examen simulare</h2>
-          <p>Fără indicii până la final. Promovarea este la 80%.</p>
-          <div class="row" style="margin-bottom:12px">
-            <label class="field">Număr întrebări
-              <select id="exam-size">
-                <option value="20">20</option>
-                <option value="30" selected>30</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-              </select>
-            </label>
-          </div>
+          <p>25 de întrebări, fără indicii până la final. Promovarea este la 80%.</p>
           <button class="btn" data-action="exam">Pornește examenul</button>
         </article>
         <article class="card">
@@ -424,8 +415,7 @@
       render();
     } else if (action === "practice") startSession("practice");
     else if (action === "exam" || action === "exam-again") {
-      const size = Number(document.getElementById("exam-size")?.value || state.examSize || 30);
-      startSession("exam", size);
+      startSession("exam", EXAM_SIZE);
     } else if (action === "mistakes") startSession("mistakes");
     else if (action === "browse") {
       stopTimer();
